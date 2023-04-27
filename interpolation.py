@@ -58,3 +58,40 @@ def newton_method(x_table, y_table, size, x, finite_differences, printed):
         if printed:
             print("P_" + str(size - 1) + "(x) = " + str(round(n, 5)))
         return n
+
+
+def stirling_method(x_table, y_table, size, x, finite_differences, printed):
+    if len(x_table) % 2 == 0:
+        if printed:
+            print("Интерполяция методом Стирлинга невозможна. Четное количество узлов")
+        return [0, False]
+    middle = (len(x_table) + 1) // 2
+    h = x_table[1] - x_table[0]
+    t = (x-x_table[middle-1])/h
+    if abs(t) > 0.25:
+        if printed:
+            print("Интерполяция методом Стирлинга невозможна. t слишком велико")
+        return [0, False]
+    if printed:
+        print("Интерполяция методом Стирлинга")
+    s = y_table[middle-1]
+    for i in range(1, (size+1)//2):
+        pow = 2*i-1
+        p1 = t/faq(pow)
+        for j in range(1, i):
+            p1 *= (t**2-j**2)
+        p1 *= (finite_differences[middle-i][2+pow]+finite_differences[middle+1-i][2+pow])/2
+        p2 = finite_differences[middle-i][3+pow]/faq(2*i)
+        for j in range(i):
+            p2 *= (t**2-j**2)
+        s += p1 + p2
+    if printed:
+        print("S_" + str(size - 1) + "(x) = " + str(round(s, 5)))
+    return [s, True]
+
+
+def faq(n):
+    s = 1
+    for i in range(1, n+1):
+        s *= i
+    return s

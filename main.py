@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 from func_utils import func
-from interpolation import count_finite_differences, lagranzhe_method, newton_method, stirling_method
+from interpolation import count_finite_differences, lagranzhe_method, newton_method, stirling_method, bessel_method
 
 
 # Преобразование уравнения в обратную польскую запись
@@ -204,16 +204,20 @@ print(x)
 lagranzh = lagranzhe_method(x_table, y_table, matrix_size, x, True)
 newton = newton_method(x_table, y_table, matrix_size, x, finite_differences, True)
 stirling = stirling_method(x_table, y_table, matrix_size, x, finite_differences, True)
+bessel = bessel_method(x_table, y_table, matrix_size, x, finite_differences, True)
 
 l_table = []
 n_table = []
 s_table = []
+b_table = []
 x = np.arange(float(min(x_table)), float(max(x_table)) + 0.01, 0.01)
 for i in x:
     l_table.append(lagranzhe_method(x_table, y_table, matrix_size, i, False))
     n_table.append(newton_method(x_table, y_table, matrix_size, i, finite_differences, False))
     if stirling[1]:
         s_table.append(stirling_method(x_table, y_table, matrix_size, i, finite_differences, False)[0])
+    if bessel[1]:
+        b_table.append(bessel_method(x_table, y_table, matrix_size, i, finite_differences, False)[0])
 if inputed == 3:
     plt.scatter(x_table, y_table)
     c_table = []
@@ -226,6 +230,8 @@ plt.plot(x, l_table, label='Многочлен Лагранжа')
 plt.plot(x, n_table, label='Многочлен Ньютона')
 if stirling[1]:
     plt.plot(x, s_table, label='Многочлен Стирлинга')
+if bessel[1]:
+    plt.plot(x, b_table, label='Многочлен Бесселя')
 
 plt.grid(True)
 plt.legend()

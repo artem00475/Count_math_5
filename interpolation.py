@@ -29,7 +29,10 @@ def lagranzhe_method(x_table, y_table, size, x, printed):
 
 
 def newton_method(x_table, y_table, size, x, finite_differences, printed):
-    middle = x_table[len(x_table)//2+1]
+    if len(x_table) % 2 == 0:
+        middle = x_table[len(x_table) // 2 - 1]
+    else:
+        middle = x_table[len(x_table)//2]
     if x > middle:
         if printed:
             print("Интерполяция по второй формуле Ньютона.")
@@ -95,3 +98,33 @@ def faq(n):
     for i in range(1, n+1):
         s *= i
     return s
+
+
+def bessel_method(x_table, y_table, size, x, finite_differences, printed):
+    if len(x_table) % 2 == 1:
+        if printed:
+            print("Интерполяция методом Бесселя невозможна. Нечетное количество узлов")
+        return [0, False]
+    middle = (len(x_table)) // 2 - 1
+    h = x_table[1] - x_table[0]
+    t = (x-x_table[middle])/h
+    if abs(t) < 0.25 or abs(t) > 0.75:
+        if printed:
+            print("Интерполяция методом Бесселя невозможна. t выходит за пределы диапозона")
+        return [0, False]
+    if printed:
+        print("Интерполяция методом Бесселя")
+    b = (y_table[middle] + y_table[middle+1])/2 + (t-0.5)*finite_differences[middle+1][3]
+    for i in range(1, size//2):
+        pow = 2*i
+        p1 = 1/faq(pow)
+        for j in range(i):
+            p1 *= (t-j)*(t+j-1)
+        p1 *= (finite_differences[middle+1-i][2+pow]+finite_differences[middle+2-i][2+pow])/2
+        p2 = (finite_differences[middle+1-i][3+pow]*(t-0.5))/faq(2*i+1)
+        for j in range(i):
+            p2 *= (t-j)*(t+j-1)
+        b += p1 + p2
+    if printed:
+        print("B_" + str(size - 1) + "(x) = " + str(round(b, 5)))
+    return [b, True]

@@ -80,13 +80,11 @@ def stirling_method(x_table, y_table, size, x, finite_differences, printed):
     s = y_table[middle-1]
     for i in range(1, (size+1)//2):
         pow = 2*i-1
-        p1 = t/faq(pow)
+        p = 1
         for j in range(1, i):
-            p1 *= (t**2-j**2)
-        p1 *= (finite_differences[middle-i][2+pow]+finite_differences[middle+1-i][2+pow])/2
-        p2 = finite_differences[middle-i][3+pow]/faq(2*i)
-        for j in range(i):
-            p2 *= (t**2-j**2)
+            p *= (t**2-j**2)
+        p1 = (p * t * (finite_differences[middle-i][2+pow]+finite_differences[middle+1-i][2+pow]))/(2 * faq(pow))
+        p2 = (finite_differences[middle-i][3+pow]*t**2 * p)/faq(2*i)
         s += p1 + p2
     if printed:
         print("S_" + str(size - 1) + "(x) = " + str(round(s, 5)))
@@ -117,13 +115,11 @@ def bessel_method(x_table, y_table, size, x, finite_differences, printed):
     b = (y_table[middle] + y_table[middle+1])/2 + (t-0.5)*finite_differences[middle+1][3]
     for i in range(1, size//2):
         pow = 2*i
-        p1 = 1/faq(pow)
+        p = 1
         for j in range(i):
-            p1 *= (t-j)*(t+j-1)
-        p1 *= (finite_differences[middle+1-i][2+pow]+finite_differences[middle+2-i][2+pow])/2
-        p2 = (finite_differences[middle+1-i][3+pow]*(t-0.5))/faq(2*i+1)
-        for j in range(i):
-            p2 *= (t-j)*(t+j-1)
+            p *= (t-j)*(t+j-1)
+        p1 = (p * (finite_differences[middle+1-i][2+pow]+finite_differences[middle+2-i][2+pow]))/(2*faq(pow))
+        p2 = (finite_differences[middle+1-i][3+pow]*(t-0.5)*p)/faq(2*i+1)
         b += p1 + p2
     if printed:
         print("B_" + str(size - 1) + "(x) = " + str(round(b, 5)))

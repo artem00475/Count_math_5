@@ -37,6 +37,22 @@ def get_interval():
     return min(a, b), max(a, b)
 
 
+def get_x(a, b):
+    print("Введите точку, в которой нужно найти значение функции:")
+    flagс = False
+    d = 0
+    while not flagс:
+        try:
+            d = float(input())
+            if d >= b or d <= a:
+                print("Точка должна быть внутри интервала")
+                continue
+            flagс = True
+            return d
+        except ValueError:
+            print("Повторите ввод")
+
+
 def print_table(x, y, p, e):
     b = [x, y, p, e]
     a = [' x  ', ' y  ', 'P(x)', ' e  ']

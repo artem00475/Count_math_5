@@ -1,7 +1,7 @@
 import sys
 
 from aproximation import linear, quadratic, third, power, exponential, logarithmic
-from console_utils import print_to_output, enter_value, get_interval
+from console_utils import print_to_output, enter_value, get_interval, get_x
 from file_utils import print_to_file
 import matplotlib.pyplot as plt
 import numpy as np
@@ -199,9 +199,8 @@ for i in range(1, len(table)):
     y_table.append(table[i][1])
 finite_differences = count_finite_differences(x_table, y_table, matrix_size)
 print_table(finite_differences)
-
-
-
+x = get_x(min(x_table), max(x_table))
+print(x)
 
 res = [[' X   ']]
 for i in range(matrix_size):

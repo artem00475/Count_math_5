@@ -212,7 +212,14 @@ x = np.arange(float(min(x_table)), float(max(x_table)) + 0.01, 0.01)
 for i in x:
     l_table.append(lagranzhe_method(x_table, y_table, matrix_size, i, False))
     n_table.append(newton_method(x_table, y_table, matrix_size, i, finite_differences, False))
-plt.plot(x_table, y_table, label='Исходная функция', marker='o')
+if inputed == 3:
+    plt.scatter(x_table, y_table)
+    c_table = []
+    for i in x:
+        c_table.append(func(equation, i))
+    plt.plot(x, c_table, label='Исходная функция')
+else:
+    plt.plot(x_table, y_table, label='Исходная функция', marker='o')
 plt.plot(x, l_table, label='Многочлен Лагранжа')
 plt.plot(x, n_table, label='Многочлен Ньютона')
 

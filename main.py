@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 from func_utils import func
-from interpolation import count_finite_differences
+from interpolation import count_finite_differences, lagranzhe_method, newton_method
 
 
 # Преобразование уравнения в обратную польскую запись
@@ -201,6 +201,9 @@ finite_differences = count_finite_differences(x_table, y_table, matrix_size)
 print_table(finite_differences)
 x = get_x(min(x_table), max(x_table))
 print(x)
+
+lagranzh = lagranzhe_method(x_table, y_table, matrix_size, x)
+newton = newton_method(x_table, y_table, matrix_size, x, finite_differences)
 
 res = [[' X   ']]
 for i in range(matrix_size):

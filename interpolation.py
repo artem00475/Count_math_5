@@ -33,10 +33,10 @@ def newton_method(x_table, y_table, size, x, finite_differences, printed, type):
         middle = x_table[len(x_table) // 2 - 1]
     else:
         middle = x_table[len(x_table)//2]
+    h = x_table[1] - x_table[0]
     if (x > middle and type==0) or type == 1:
         if printed:
             print("Интерполяция по второй формуле Ньютона.")
-        h = x_table[1] - x_table[0]
         t = (x - x_table[-1])/h
         n = y_table[-1]
         for i in range(size-1):
@@ -50,7 +50,6 @@ def newton_method(x_table, y_table, size, x, finite_differences, printed, type):
     elif (x <= middle and type == 0) or type == 2:
         if printed:
             print("Интерполяция по первой формуле Ньютона.")
-        h = x_table[1] - x_table[0]
         t = (x - x_table[0]) / h
         n = y_table[0]
         for i in range(size-1):

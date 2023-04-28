@@ -28,12 +28,12 @@ def lagranzhe_method(x_table, y_table, size, x, printed):
     return l
 
 
-def newton_method(x_table, y_table, size, x, finite_differences, printed):
+def newton_method(x_table, y_table, size, x, finite_differences, printed, type):
     if len(x_table) % 2 == 0:
         middle = x_table[len(x_table) // 2 - 1]
     else:
         middle = x_table[len(x_table)//2]
-    if x > middle:
+    if (x > middle and type==0) or type == 1:
         if printed:
             print("Интерполяция по второй формуле Ньютона.")
         h = x_table[1] - x_table[0]
@@ -46,8 +46,8 @@ def newton_method(x_table, y_table, size, x, finite_differences, printed):
             n += p
         if printed:
             print("P_" + str(size - 1) + "(x) = " + str(round(n, 5)))
-        return n
-    else:
+        return [n, 1]
+    elif (x <= middle and type == 0) or type == 2:
         if printed:
             print("Интерполяция по первой формуле Ньютона.")
         h = x_table[1] - x_table[0]
@@ -60,7 +60,7 @@ def newton_method(x_table, y_table, size, x, finite_differences, printed):
             n += p
         if printed:
             print("P_" + str(size - 1) + "(x) = " + str(round(n, 5)))
-        return n
+        return [n, 2]
 
 
 def stirling_method(x_table, y_table, size, x, finite_differences, printed):
@@ -71,7 +71,7 @@ def stirling_method(x_table, y_table, size, x, finite_differences, printed):
     middle = (len(x_table) + 1) // 2
     h = x_table[1] - x_table[0]
     t = (x-x_table[middle-1])/h
-    if abs(t) > 0.25:
+    if abs(t) > 0.25 and printed:
         if printed:
             print("Интерполяция методом Стирлинга невозможна. t слишком велико")
         return [0, False]
@@ -106,7 +106,7 @@ def bessel_method(x_table, y_table, size, x, finite_differences, printed):
     middle = (len(x_table)) // 2 - 1
     h = x_table[1] - x_table[0]
     t = (x-x_table[middle])/h
-    if abs(t) < 0.25 or abs(t) > 0.75:
+    if (abs(t) < 0.25 or abs(t) > 0.75) and printed:
         if printed:
             print("Интерполяция методом Бесселя невозможна. t выходит за пределы диапозона")
         return [0, False]

@@ -202,7 +202,7 @@ x = get_x(min(x_table), max(x_table))
 print(x)
 
 lagranzh = lagranzhe_method(x_table, y_table, matrix_size, x, True)
-newton = newton_method(x_table, y_table, matrix_size, x, finite_differences, True)
+newton = newton_method(x_table, y_table, matrix_size, x, finite_differences, True, 0)
 stirling = stirling_method(x_table, y_table, matrix_size, x, finite_differences, True)
 bessel = bessel_method(x_table, y_table, matrix_size, x, finite_differences, True)
 
@@ -213,7 +213,7 @@ b_table = []
 x = np.arange(float(min(x_table)), float(max(x_table)) + 0.01, 0.01)
 for i in x:
     l_table.append(lagranzhe_method(x_table, y_table, matrix_size, i, False))
-    n_table.append(newton_method(x_table, y_table, matrix_size, i, finite_differences, False))
+    n_table.append(newton_method(x_table, y_table, matrix_size, i, finite_differences, False, newton[1])[0])
     if stirling[1]:
         s_table.append(stirling_method(x_table, y_table, matrix_size, i, finite_differences, False)[0])
     if bessel[1]:

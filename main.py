@@ -205,6 +205,40 @@ lagranzh = lagranzhe_method(x_table, y_table, matrix_size, x, True)
 newton = newton_method(x_table, y_table, matrix_size, x, finite_differences, True, 0)
 stirling = stirling_method(x_table, y_table, matrix_size, x, finite_differences, True)
 bessel = bessel_method(x_table, y_table, matrix_size, x, finite_differences, True)
+num = 0
+for i in range(len(x_table)):
+    if x_table[i] > x:
+        num = i-1
+        break
+y0 = y_table[num]
+y1 = y_table[num+1]
+
+if y0 <= lagranzh <= y1:
+    print("Значения в методе Лагранжа попало в интервал.")
+else:
+    print("Значения в методе Лагранжа не попало в интервал.")
+if y0 <= newton[0] <= y1:
+    print("Значения в методе Ньютона попало в интервал.")
+else:
+    print("Значения в методе Ньютона не попало в интервал.")
+if bessel[1]:
+    if y0 <= bessel[0] <= y1:
+        print("Значения в методе Бесселя попало в интервал.")
+    else:
+        print("Значения в методе Бесселя не попало в интервал.")
+if stirling[1]:
+    if y0 <= stirling[0] <= y1:
+        print("Значения в методе Стирлинга попало в интервал.")
+    else:
+        print("Значения в методе Стирлинга не попало в интервал.")
+print("Отлонение между Лагранжом и Ньютоном:", abs(lagranzh-newton[0]))
+if bessel[1]:
+    print("Отлонение между Лагранжом и Бесселем:", abs(lagranzh - bessel[0]))
+    print("Отлонение между Ньютоном и Бесселем:", abs(newton[0] - bessel[0]))
+if stirling[1]:
+    print("Отлонение между Лагранжом и Стирлингом:", abs(lagranzh - stirling[0]))
+    print("Отлонение между Ньютоном и Стирлингом:", abs(newton[0] - stirling[0]))
+
 
 l_table = []
 n_table = []

@@ -210,24 +210,24 @@ for i in range(len(x_table)):
     if x_table[i] > x:
         num = i-1
         break
-y0 = y_table[num]
-y1 = y_table[num+1]
-
-if y0 <= lagranzh <= y1:
+y0 = abs(y_table[num])
+y1 = abs(y_table[num+1])
+print(y0, y1)
+if y0 <= abs(lagranzh) <= y1:
     print("Значения в методе Лагранжа попало в интервал.")
 else:
     print("Значения в методе Лагранжа не попало в интервал.")
-if y0 <= newton[0] <= y1:
+if y0 <= abs(newton[0]) <= y1:
     print("Значения в методе Ньютона попало в интервал.")
 else:
     print("Значения в методе Ньютона не попало в интервал.")
 if bessel[1]:
-    if y0 <= bessel[0] <= y1:
+    if y0 <= abs(bessel[0]) <= y1:
         print("Значения в методе Бесселя попало в интервал.")
     else:
         print("Значения в методе Бесселя не попало в интервал.")
 if stirling[1]:
-    if y0 <= stirling[0] <= y1:
+    if y0 <= abs(stirling[0]) <= y1:
         print("Значения в методе Стирлинга попало в интервал.")
     else:
         print("Значения в методе Стирлинга не попало в интервал.")
